@@ -1,0 +1,5 @@
+FPS = 30
+TITULO_JUEGO = "Tragamonedas"
+FONDO_JUEGO = "assets/images/background.png"
+ANCHO_PANTALLA = 672
+ALTO_PANTALLA = 672
