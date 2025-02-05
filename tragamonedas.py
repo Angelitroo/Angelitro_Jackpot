@@ -1,46 +1,13 @@
 import pygame
 import random
 from icono import Icono
-
-# Define la tabla de pagos ampliada
-PAGOS = {
-    ("Siete", "Siete", "Siete"): 1000,
-    ("Arnis", "Arnis", "Arnis"): 300,
-    ("Tsinelas", "Tsinelas", "Tsinelas"): 200,
-    ("Banyal", "Banyal", "Banyal"): 100,
-    ("Camisa", "Camisa", "Camisa"): 30,
-    ("Bandana", "Bandana", "Bandana"): 20,
-    ("Sombrero", "Sombrero", "Sombrero"): 10,
-    ("Siete", "Siete", "Arnis"): 500,
-    ("Siete", "Arnis", "Arnis"): 400,
-    ("Arnis", "Arnis", "Tsinelas"): 250,
-    ("Tsinelas", "Tsinelas", "Banyal"): 150,
-    ("Banyal", "Banyal", "Camisa"): 50,
-    ("Camisa", "Camisa", "Bandana"): 25,
-    ("Bandana", "Bandana", "Sombrero"): 15,
-    ("Sombrero", "Sombrero", "Triste"): 5,
-    ("Siete", "Siete", "Tsinelas"): 450,
-    ("Siete", "Tsinelas", "Tsinelas"): 350,
-    ("Arnis", "Arnis", "Banyal"): 200,
-    ("Tsinelas", "Tsinelas", "Camisa"): 120,
-    ("Banyal", "Banyal", "Bandana"): 60,
-    ("Camisa", "Camisa", "Sombrero"): 35,
-    ("Bandana", "Bandana", "Triste"): 10,
-    ("Sombrero", "Sombrero", "Siete"): 20,
-    ("Triste", "Triste", "Siete"): 1,
-}
+from constantes import REDUCCION_PREMIO, MUSICA_FONDO, MENSAJE_INICIO, APUESTA, SIN_DINERO, NO_GIRAR, GANASTE, PERDISTE, PAGOS
 
 class Tragamonedas:
-    MENSAJE_INICIO = "Tragamonedas"
-    GANASTE = "Ganaste $"
-    PERDISTE = "Perdiste"
-    APUESTA = "Apostaste $"
-    SIN_DINERO = "No tienes suficiente dinero"
-    NO_GIRAR = "No puedes girar"
-    REDUCCION_PREMIO = 0.35  # Factor de reducción del premio
-
     def __init__(self, jackpot_inicial, dinero_inicial):
         pygame.mixer.init()
+        pygame.mixer.music.load(MUSICA_FONDO)
+        pygame.mixer.music.play(-1)  # Play the music in a loop
         self.jackpot_inicial = jackpot_inicial
         self.dinero_inicial = dinero_inicial
         self.iconos = []
@@ -48,7 +15,7 @@ class Tragamonedas:
         self.reiniciar()
 
     def reiniciar(self):
-        self.mensaje_actual = Tragamonedas.MENSAJE_INICIO
+        self.mensaje_actual = MENSAJE_INICIO
         self.jackpot_actual = self.jackpot_inicial
         self.dinero_actual = self.dinero_inicial
         self.resultados = ["Siete"] * 3
@@ -69,9 +36,9 @@ class Tragamonedas:
     def establecer_apuesta(self, apuesta):
         if self.dinero_actual >= apuesta:
             self.apuesta_actual = apuesta
-            self.mensaje_actual = f"{Tragamonedas.APUESTA} {self.apuesta_actual}"
+            self.mensaje_actual = f"{APUESTA} {self.apuesta_actual}"
         else:
-            self.mensaje_actual = Tragamonedas.SIN_DINERO
+            self.mensaje_actual = SIN_DINERO
 
     def obtener_mensaje_actual(self):
         return self.mensaje_actual
@@ -86,19 +53,19 @@ class Tragamonedas:
             cantidad_ganada = self.calcular_ganancia()
             if cantidad_ganada > 0:
                 self.dinero_actual += cantidad_ganada  # Sumar la cantidad ganada
-                self.mensaje_actual = f"Ganaste ${cantidad_ganada}"
+                self.mensaje_actual = f"{GANASTE} ${cantidad_ganada}"
             else:
-                self.mensaje_actual = "Perdiste"
+                self.mensaje_actual = PERDISTE
             return self.resultados, cantidad_ganada
         else:
-            self.mensaje_actual = Tragamonedas.NO_GIRAR
+            self.mensaje_actual = NO_GIRAR
             return [], 0
 
     def calcular_ganancia(self):
         # Ordena los resultados para que coincidan con las claves de la tabla de pagos
         resultados_ordenados = tuple(sorted(self.resultados))
         premio_base = PAGOS.get(resultados_ordenados, 0)
-        return int(premio_base * self.apuesta_actual * Tragamonedas.REDUCCION_PREMIO)
+        return int(premio_base * self.apuesta_actual * REDUCCION_PREMIO)
 
     def obtener_dinero_actual(self):
         return self.dinero_actual
