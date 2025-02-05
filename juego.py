@@ -1,13 +1,9 @@
 import pygame
-import time
-import random
-from constantes import FONDO_JUEGO, TITULO_JUEGO, FPS
+from constantes import ANCHO_PANTALLA, ALTO_PANTALLA,FONDO_JUEGO, TITULO_JUEGO, FPS, DINERO_INICIAL
 from tragamonedas import Tragamonedas
 from botones import BotonApuesta, BotonAccion
 from fuente import FuenteDigital
 
-ANCHO_PANTALLA = 672
-ALTO_PANTALLA = 672
 
 def iniciar_juego():
     pygame.init()
@@ -17,11 +13,11 @@ def iniciar_juego():
     fondo = pygame.image.load(FONDO_JUEGO)
     fondo = pygame.transform.scale(fondo, (ANCHO_PANTALLA, ALTO_PANTALLA))
 
-    tragamonedas = Tragamonedas(10000, 300)
+    tragamonedas = Tragamonedas(10000, DINERO_INICIAL)
     fuente_digital = FuenteDigital(tragamonedas.obtener_mensaje_actual, (100, 140), (0, 0, 0))
 
     botones_apuesta = pygame.sprite.Group(
-        BotonApuesta("ten_button.png", 10, (100, 500)),
+BotonApuesta("ten_button.png", 10, (100, 500)),
         BotonApuesta("twenty_button.png", 20, (200, 500)),
         BotonApuesta("fifty_button.png", 50, (300, 500)),
         BotonApuesta("hundred_button.png", 100, (400, 500))

@@ -11,7 +11,6 @@ PAGOS = {
     ("Camisa", "Camisa", "Camisa"): 30,
     ("Bandana", "Bandana", "Bandana"): 20,
     ("Sombrero", "Sombrero", "Sombrero"): 10,
-    ("Triste", "Triste", "Triste"): 0,
     ("Siete", "Siete", "Arnis"): 500,
     ("Siete", "Arnis", "Arnis"): 400,
     ("Arnis", "Arnis", "Tsinelas"): 250,
@@ -38,8 +37,6 @@ class Tragamonedas:
     APUESTA = "Apostaste $"
     SIN_DINERO = "No tienes suficiente dinero"
     NO_GIRAR = "No puedes girar"
-    APUESTA_INICIAL = 10
-    AUMENTO_JACKPOT = 0.15
     REDUCCION_PREMIO = 0.35  # Factor de reducción del premio
 
     def __init__(self, jackpot_inicial, dinero_inicial):
@@ -69,7 +66,6 @@ class Tragamonedas:
             Icono("Siete", "siete.png")
         ]
 
-
     def establecer_apuesta(self, apuesta):
         if self.dinero_actual >= apuesta:
             self.apuesta_actual = apuesta
@@ -86,7 +82,6 @@ class Tragamonedas:
             return [], 0
         if self.dinero_actual >= self.apuesta_actual:
             self.dinero_actual -= self.apuesta_actual
-            self.jackpot_actual += int(self.apuesta_actual * Tragamonedas.AUMENTO_JACKPOT)
             self.resultados = [random.choice(self.iconos).nombre for _ in range(3)]
             cantidad_ganada = self.calcular_ganancia()
             if cantidad_ganada > 0:
