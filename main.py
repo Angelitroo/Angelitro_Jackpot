@@ -1,8 +1,3 @@
-from PIL import PngImagePlugin
-
-# Deshabilitar advertencias de libpng
-PngImagePlugin.warnings.simplefilter("ignore")
-
 import pygame
 from juego import iniciar_juego
 
