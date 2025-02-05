@@ -59,15 +59,16 @@ class Tragamonedas:
 
     def __crear_iconos(self):
         self.iconos = [
-            Icono("Triste", 0, 0, "sadface.png"),
-            Icono("Sombrero", 10, 1, "katipunero_hat.png"),
-            Icono("Bandana", 20, 2, "bandana.png"),
-            Icono("Camisa", 30, 2, "camesa_de_chino.png"),
-            Icono("Banyal", 100, 2, "banyal.png"),
-            Icono("Tsinelas", 200, 2, "tsinelas.png"),
-            Icono("Arnis", 300, 5, "arnis.png"),
-            Icono("Siete", 1000, 10, "siete.png", 5)
+            Icono("Triste", "sadface.png"),
+            Icono("Sombrero", "katipunero_hat.png"),
+            Icono("Bandana", "bandana.png"),
+            Icono("Camisa", "camesa_de_chino.png"),
+            Icono("Banyal", "banyal.png"),
+            Icono("Tsinelas", "tsinelas.png"),
+            Icono("Arnis", "arnis.png"),
+            Icono("Siete", "siete.png")
         ]
+
 
     def establecer_apuesta(self, apuesta):
         if self.dinero_actual >= apuesta:
